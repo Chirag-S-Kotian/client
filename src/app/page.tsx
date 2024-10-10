@@ -1,101 +1,246 @@
-import Image from "next/image";
+"use client"
+
+import { useRef, useState, useEffect } from 'react'
+import Link from 'next/link'
+import dynamic from 'next/dynamic'
+import { Button } from '@/components/ui/button'
+import { ThemeToggle } from '@/components/theme-toggle'
+import { HardDrive, Lock, Share2, Twitter, Linkedin, Github, Globe, FileType, Upload } from 'lucide-react'
+import { useTheme } from 'next-themes'
+
+const MotionDiv = dynamic(() => import('framer-motion').then((mod) => mod.motion.div), { ssr: false })
+const MotionLink = dynamic(() => import('framer-motion').then((mod) => mod.motion(Link)), { ssr: false })
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const targetRef = useRef<HTMLDivElement>(null)
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
+  const isDark = theme === 'dark'
+
+  return (
+    <MotionDiv
+      className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <header className="w-full flex justify-between items-center p-4 md:p-6 fixed top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+        <MotionDiv
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Link href="/" className="text-2xl font-bold text-blue-600 dark:text-blue-400">CDrive</Link>
+        </MotionDiv>
+        <nav className="flex items-center space-x-4">
+          <ThemeToggle />
+          <MotionLink href="/login" 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <Button variant="ghost" size="sm">Login</Button>
+          </MotionLink>
+          <MotionLink href="/register"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Read our docs
-          </a>
-        </div>
+            <Button size="sm">Register</Button>
+          </MotionLink>
+        </nav>
+      </header>
+
+      <main className="flex-grow flex flex-col items-center justify-center px-4 pt-20">
+        <MotionDiv
+          ref={targetRef}
+          className="text-center max-w-4xl mb-12"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <MotionDiv
+            className="text-4xl md:text-6xl font-bold mt-4 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
+          >
+            Welcome to CDrive
+          </MotionDiv>
+          <MotionDiv
+            className="text-lg md:text-xl mb-8 text-gray-600 dark:text-gray-300"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            Your secure personal cloud storage solution for the modern age
+          </MotionDiv>
+          <MotionDiv
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <MotionLink href="/register"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                Get Started Now
+              </Button>
+            </MotionLink>
+          </MotionDiv>
+        </MotionDiv>
+
+        <MotionDiv
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl w-full mb-12"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.8, staggerChildren: 0.2 }}
+        >
+          <FeatureCard
+            icon={<HardDrive className="h-12 w-12 mb-4 text-blue-500" />}
+            title="Ample Storage"
+            description="Store all your important files with generous storage limits up to 10MB per file."
+          />
+          <FeatureCard
+            icon={<Lock className="h-12 w-12 mb-4 text-green-500" />}
+            title="Secure"
+            description="Your files are encrypted and protected with state-of-the-art security measures."
+          />
+          <FeatureCard
+            icon={<Share2 className="h-12 w-12 mb-4 text-purple-500" />}
+            title="Easy Sharing"
+            description="Share files and folders with friends and colleagues effortlessly."
+          />
+        </MotionDiv>
+
+        <MotionDiv
+          className="w-full max-w-4xl mb-12"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+        >
+          <h2 className="text-3xl font-bold mb-6 text-center">Supported File Types</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <FileTypeCard type="JPEG" icon={<FileType className="h-8 w-8 text-blue-500" />} />
+            <FileTypeCard type="PNG" icon={<FileType className="h-8 w-8 text-green-500" />} />
+            <FileTypeCard type="PDF" icon={<FileType className="h-8 w-8 text-red-500" />} />
+            <FileTypeCard type="DOCX" icon={<FileType className="h-8 w-8 text-purple-500" />} />
+          </div>
+        </MotionDiv>
+
+        <MotionDiv
+          className="w-full max-w-4xl mb-12"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+        >
+          <h2 className="text-3xl font-bold mb-6 text-center">How It Works</h2>
+          <ol className="list-decimal list-inside space-y-4">
+            <li className="text-lg">Sign up for a free account</li>
+            <li className="text-lg">Upload your files (up to 10MB each)</li>
+            <li className="text-lg">Access your files from anywhere, anytime</li>
+            <li className="text-lg">Share files securely with others</li>
+          </ol>
+        </MotionDiv>
+
+        <MotionDiv
+          className="w-full max-w-md"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.6, duration: 0.8 }}
+        >
+          <MotionLink href="/register"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button size="lg" className="w-full bg-green-600 hover:bg-green-700 text-white">
+              <Upload className="mr-2 h-5 w-5" />
+              Start Uploading Now
+            </Button>
+          </MotionLink>
+        </MotionDiv>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="w-full bg-gray-100 dark:bg-gray-800 py-8 mt-12">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-sm text-gray-600 dark:text-gray-400 mb-4 md:mb-0">
+              © 2024 CDrive. All rights reserved. Made By Chirag S Kotian 🐦‍🔥.
+            </div>
+            <div className="flex space-x-4">
+              <SocialIcon href="https://twitter.com/Chirag_S_kotian" icon={<Twitter />} />
+              <SocialIcon href="https://www.linkedin.com/in/Chirag-S-Kotian" icon={<Linkedin />} />
+              <SocialIcon href="https://github.com/Chirag-S-Kotian" icon={<Github />} />
+              <SocialIcon href="https://chirag-blockchian.vercel.app" icon={<Globe />} />
+            </div>
+          </div>
+        </div>
       </footer>
-    </div>
-  );
+    </MotionDiv>
+  )
+}
+
+function FeatureCard({ icon, title, description }) {
+  return (
+    <MotionDiv
+      className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg text-center"
+      whileHover={{ scale: 1.05, rotate: 2 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 300, damping: 10 }}
+    >
+      <MotionDiv
+        initial={{ rotateY: 0 }}
+        whileHover={{ rotateY: 180 }}
+        transition={{ duration: 0.8 }}
+      >
+        {icon}
+      </MotionDiv>
+      <h2 className="text-xl font-semibold mb-2">{title}</h2>
+      <p className="text-gray-600 dark:text-gray-300">{description}</p>
+    </MotionDiv>
+  )
+}
+
+function FileTypeCard({ type, icon }) {
+  return (
+    <MotionDiv
+      className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md text-center"
+      whileHover={{ scale: 1.1, rotate: 5 }}
+      whileTap={{ scale: 0.9 }}
+      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+    >
+      <MotionDiv
+        initial={{ rotate: 0 }}
+        whileHover={{ rotate: 360 }}
+        transition={{ duration: 0.8 }}
+      >
+        {icon}
+      </MotionDiv>
+      <p className="mt-2 font-semibold">{type}</p>
+    </MotionDiv>
+  )
+}
+
+function SocialIcon({ href, icon }) {
+  return (
+    <MotionDiv
+      whileHover={{ scale: 1.2, rotate: 15 }}
+      whileTap={{ scale: 0.8 }}
+    >
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-gray-600 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+      >
+        {icon}
+      </a>
+    </MotionDiv>
+  )
 }
