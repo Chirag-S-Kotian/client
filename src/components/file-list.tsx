@@ -6,8 +6,17 @@ import { Input } from '@/components/ui/input'
 import { Search, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 
+// Define a specific interface for the file structure
+interface File {
+  id: string;
+  name: string;
+  url: string;
+  type: string;
+}
+
+
 interface FileListProps {
-  files: any[]
+  files: File[]
   viewMode: 'grid' | 'list'
   isLoading: boolean
   onUpdate: () => void

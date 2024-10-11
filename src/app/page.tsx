@@ -26,7 +26,7 @@ export default function Home() {
 
   return (
     <MotionDiv
-      className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100"
+      className={`min-h-screen flex flex-col ${isDark ? 'bg-gray-900' : 'bg-gradient-to-b from-blue-50 to-white'} text-gray-900 dark:text-gray-100`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -186,7 +186,7 @@ export default function Home() {
   )
 }
 
-function FeatureCard({ icon, title, description }) {
+function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
   return (
     <MotionDiv
       className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg text-center"
@@ -207,7 +207,7 @@ function FeatureCard({ icon, title, description }) {
   )
 }
 
-function FileTypeCard({ type, icon }) {
+function FileTypeCard({ type, icon }: { type: string, icon: React.ReactNode }) {
   return (
     <MotionDiv
       className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md text-center"
@@ -227,7 +227,7 @@ function FileTypeCard({ type, icon }) {
   )
 }
 
-function SocialIcon({ href, icon }) {
+function SocialIcon({ href, icon }: { href: string, icon: React.ReactNode }) {
   return (
     <MotionDiv
       whileHover={{ scale: 1.2, rotate: 15 }}

@@ -46,7 +46,11 @@ export default function AuthForm({ type }: AuthFormProps) {
         }
       }
     } catch (err) {
-      setError(err.message || 'Authentication failed')
+      if (err instanceof Error) {
+        setError(err.message || 'Authentication failed');
+      } else {
+        setError('Authentication failed');
+      }
     }
   }
 

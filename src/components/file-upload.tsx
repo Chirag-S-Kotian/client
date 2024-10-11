@@ -10,6 +10,7 @@ import { Upload, CheckCircle, AlertCircle, Coffee } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 
 type FileUploadProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUploadComplete: (uploadedFile: any) => void
 }
 
@@ -155,7 +156,7 @@ export default function FileUpload({ onUploadComplete }: FileUploadProps) {
         transition={{ delay: 1, duration: 0.5 }}
         className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"
       >
-        <p>Thank you for using CDrive! We hope you're enjoying our service.</p>
+        <p>Thank you for using CDrive! We hope you&apos;re enjoying our service.</p>
         <motion.div
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}

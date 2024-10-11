@@ -97,7 +97,8 @@ export default function FileItem({ file, onUpdate, onDelete, viewMode }: FileIte
     }
   }
 
-  const FileTypeIcon = fileIcons[file.type] || fileIcons.default
+  const FileTypeIcon = fileIcons[file.type as keyof typeof fileIcons] || fileIcons.default;
+
 
   return (
     <motion.div

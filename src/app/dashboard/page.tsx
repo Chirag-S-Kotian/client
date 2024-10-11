@@ -39,7 +39,7 @@ export default function DashboardPage() {
     fetchFiles()
   }, [router, fetchFiles])
 
-  const handleUploadComplete = useCallback(async (newFile: any) => {
+  const handleUploadComplete = useCallback(async () => {
     await fetchFiles() // Refetch all files after a new upload
   }, [fetchFiles])
 
